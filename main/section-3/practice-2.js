@@ -1,24 +1,21 @@
 'use strict';
-
-function includes(collection, ch) {
-    for (let item of collection) {
-        if (item === ch) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 module.exports = function createUpdatedCollection(collectionA, objectB) {
-    let result = [];
-    for (let item of collectionA) {
-        let key = item.key;
-        let count = item.count;
-        if (includes(objectB.value, key)) {
-            count = count - Math.floor(count / 3);
+        var resCollection= [];
+        var arrB = objectB.value;
+        for(var obj in collectionA){
+            if(arrB.indexOf(collectionA[obj].key) >= 0){
+
+                resCollection.push({
+                    key:collectionA[obj].key,
+                    count:collectionA[obj].count-Math.floor(collectionA[obj].count/3)
+                })
+
+            }else{
+                resCollection.push({
+                    key:collectionA[obj].key,
+                    count:collectionA[obj].count
+                })
+            }
         }
-        result.push({key, count});
+        return resCollection;
     }
-    return result;
-}
